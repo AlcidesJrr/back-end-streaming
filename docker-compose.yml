@@ -1,0 +1,18 @@
+version: '3'
+
+services:
+  database:
+    image: postgres
+    ports:
+      - '5432:5432'
+    container_name: streaming
+    restart: always
+    volumes:
+      - postgres-disk:/var/lib/postgresql/data
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: bluemer.3824
+      POSTGRES_DB: streaming
+
+volumes:
+  postgres-disk:
