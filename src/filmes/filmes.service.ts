@@ -1,26 +1,68 @@
-import { Injectable } from '@nestjs/common';
+import {
+  Injectable,
+  ConflictException,
+  NotAcceptableException,
+} from '@nestjs/common';
 import { CreateFilmeDto } from './dto/create-filme.dto';
 import { UpdateFilmeDto } from './dto/update-filme.dto';
+import { PrismaService } from 'src/prisma.service';
+import { Filme } from '@prisma/client';
 
 @Injectable()
 export class FilmesService {
-  create(createFilmeDto: CreateFilmeDto) {
-    return 'This action adds a new filme';
+  constructor(private db: PrismaService) {}
+
+  async create(data: CreateFilmeDto): Promise<Filme> {
+    const filmeExists = await this.db.filme.findUnique({
+      where: { name: data.name },
+    });
+    if (filmeExists) {
+      throw new ConflictException('Já existe um filme com esse nome');
+    }
+
+    const filme = await this.db.filme.create({
+      data: {
+        ...data,
+      },
+    });
+    return filme;
   }
 
-  findAll() {
-    return `This action returns all filmes`;
+  async findAll(): Promise<any[]> {
+    return await this.db.filme.findMany();
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} filme`;
+  async findOne(id: string): Promise<Filme> {
+    const filme = await this.db.filme.findUnique({
+      where: { id },
+    });
+    if (!filme) {
+      throw new NotAcceptableException('Filme não encontrado');
+    }
+    return filme;
   }
 
-  update(id: number, updateFilmeDto: UpdateFilmeDto) {
-    return `This action updates a #${id} filme`;
+  async update(id: string, data: UpdateFilmeDto): Promise<Filme> {
+    const filme = await this.db.filme.update({
+      where: { id: id },
+      data,
+    });
+    return filme;
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} filme`;
+  async remove(id: string): Promise<{ message: string }> {
+    const filme = await this.db.filme.findUnique({
+      where: { id },
+    });
+    if (!filme) {
+      throw new NotAcceptableException('Filme não encontrado');
+    } else {
+      await this.db.filme.delete({
+        where: { id },
+      });
+    }
+    return {
+      message: 'Filme excluído com sucesso',
+    };
   }
 }

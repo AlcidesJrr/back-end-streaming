@@ -24,6 +24,7 @@ CREATE TABLE "Filme" (
     "status" BOOLEAN NOT NULL DEFAULT true,
     "updatedAt" TIMESTAMP(3) NOT NULL,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "imagem" TEXT NOT NULL,
 
     CONSTRAINT "Filme_pkey" PRIMARY KEY ("id")
 );
