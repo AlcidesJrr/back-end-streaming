@@ -1,4 +1,4 @@
-import { IsString, IsNotEmpty, Length } from 'class-validator';
+import { IsString, IsNotEmpty, Length, IsNumber } from 'class-validator';
 
 export class CreateFilmeDto {
   @IsString()
@@ -22,12 +22,10 @@ export class CreateFilmeDto {
 
   @IsString()
   @IsNotEmpty({ message: 'Legenda não pode ser vazio' })
-  @Length(4, 100)
   legendas: string;
 
   @IsString()
   @IsNotEmpty({ message: 'Idioma áudio não pode ser vazio' })
-  @Length(4, 100)
   idiomasAudio: string;
 
   @IsString()
@@ -37,4 +35,8 @@ export class CreateFilmeDto {
   @IsString()
   @IsNotEmpty({ message: 'Imagem não pode ser vazio' })
   imagem: string;
+
+  @IsNumber()
+  @IsNotEmpty({ message: 'Ano de lançamento não pode ser vazio' })
+  anoLancamento: number;
 }

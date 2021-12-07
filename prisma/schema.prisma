@@ -18,16 +18,17 @@ model User {
 }
 
 model Filme {
-  id           String   @id @default(uuid())
-  name         String   @unique
-  atores       String
-  diretores    String
-  genero       String
-  legendas     String
-  idiomasAudio String
-  duracao      String
-  status       Boolean  @default(true)
-  updatedAt    DateTime @updatedAt
-  createdAt    DateTime @default(now())
-  imagem       String
+  id            String   @id @default(uuid())
+  name          String   @unique
+  atores        String
+  diretores     String
+  genero        String
+  legendas      String
+  idiomasAudio  String
+  duracao       String
+  status        Boolean  @default(true)
+  updatedAt     DateTime @updatedAt
+  createdAt     DateTime @default(now())
+  imagem        String
+  anoLancamento Int
 }

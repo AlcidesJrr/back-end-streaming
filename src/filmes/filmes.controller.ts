@@ -16,22 +16,22 @@ import { Filme } from '@prisma/client';
 export class FilmesController {
   constructor(private readonly filmesService: FilmesService) {}
 
-  @Post()
+  @Post('add/')
   create(@Body() data: CreateFilmeDto): Promise<Filme> {
     return this.filmesService.create(data);
   }
 
-  @Get()
+  @Get('all')
   findAll(): Promise<any[]> {
     return this.filmesService.findAll();
   }
 
-  @Get(':id')
+  @Get('filme/:id')
   findOne(@Param('id') id: string): Promise<Filme> {
     return this.filmesService.findOne(id);
   }
 
-  @Patch(':id')
+  @Patch('update/:id')
   update(
     @Param('id') id: string,
     @Body() data: UpdateFilmeDto,
@@ -39,7 +39,7 @@ export class FilmesController {
     return this.filmesService.update(id, data);
   }
 
-  @Delete(':id')
+  @Delete('delete/:id')
   remove(@Param('id') id: string): Promise<{ message: string }> {
     return this.filmesService.remove(id);
   }
