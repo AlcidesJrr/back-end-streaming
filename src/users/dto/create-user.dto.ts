@@ -3,7 +3,7 @@ import { IsString, IsEmail, IsNotEmpty, Length } from 'class-validator';
 export class CreateUserDto {
   @IsString({ message: 'Informe o nome do usuário' })
   @IsNotEmpty({ message: 'Nome não pode ser vazio' })
-  @Length(4, 15)
+  @Length(4, 100)
   name: string;
 
   @IsString()
@@ -13,11 +13,11 @@ export class CreateUserDto {
 
   @IsString()
   @IsNotEmpty({ message: 'Senha não pode ser vazio' })
-  @Length(8, 15)
+  @Length(8, 12)
   senha: string;
 
   @IsString()
   @IsNotEmpty({ message: 'Senha não pode ser vazio' })
-  @Length(8, 15)
+  @Length(8, 12)
   confirmacaoSenha: string;
 }
