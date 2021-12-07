@@ -39,15 +39,42 @@ export class UsersService {
     return user;
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} user`;
+  async findOne(id: string): Promise<User> {
+    const user = await this.db.user.findUnique({
+      where: { id },
+    });
+
+    if (!user) {
+      throw new NotAcceptableException('Usuário não encontrado');
+    }
+
+    delete user.senha;
+    return user;
   }
 
-  update(id: number, updateUserDto: UpdateUserDto) {
-    return `This action updates a #${id} user`;
+  async update(id: string, data: UpdateUserDto): Promise<User> {
+    const user = await this.db.user.update({
+      data,
+      where: { id: id },
+    });
+    delete user.senha;
+    return user;
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} user`;
+  async remove(id: string): Promise<{ message: string }> {
+    const user = await this.db.user.findUnique({
+      where: { id },
+    });
+
+    if (!user) {
+      throw new NotAcceptableException('Usuário não encontrado');
+    } else {
+      await this.db.user.delete({
+        where: { id },
+      });
+    }
+    return {
+      message: 'Usuário excluído com sucesso',
+    };
   }
 }

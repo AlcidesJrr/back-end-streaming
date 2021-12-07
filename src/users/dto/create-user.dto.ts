@@ -8,7 +8,7 @@ export class CreateUserDto {
 
   @IsString()
   @IsNotEmpty({ message: 'Email não pode ser vazio' })
-  @IsEmail()
+  @IsEmail({ message: 'Email inválido' })
   email: string;
 
   @IsString()
