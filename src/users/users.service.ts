@@ -2,7 +2,7 @@ import {
   Injectable,
   ConflictException,
   UnauthorizedException,
-  NotAcceptableException,
+  NotFoundException,
 } from '@nestjs/common';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
@@ -45,7 +45,7 @@ export class UsersService {
     });
 
     if (!user) {
-      throw new NotAcceptableException('Usuário não encontrado');
+      throw new NotFoundException('Usuário não encontrado');
     }
 
     delete user.senha;
@@ -67,7 +67,7 @@ export class UsersService {
     });
 
     if (!user) {
-      throw new NotAcceptableException('Usuário não encontrado');
+      throw new NotFoundException('Usuário não encontrado');
     } else {
       await this.db.user.delete({
         where: { id },

@@ -1,7 +1,7 @@
 import {
   Injectable,
   ConflictException,
-  NotAcceptableException,
+  NotFoundException,
 } from '@nestjs/common';
 import { CreateFilmeDto } from './dto/create-filme.dto';
 import { UpdateFilmeDto } from './dto/update-filme.dto';
@@ -37,7 +37,7 @@ export class FilmesService {
       where: { id },
     });
     if (!filme) {
-      throw new NotAcceptableException('Filme não encontrado');
+      throw new NotFoundException('Filme não encontrado');
     }
     return filme;
   }
@@ -55,7 +55,7 @@ export class FilmesService {
       where: { id },
     });
     if (!filme) {
-      throw new NotAcceptableException('Filme não encontrado');
+      throw new NotFoundException('Filme não encontrado');
     } else {
       await this.db.filme.delete({
         where: { id },
