@@ -84,7 +84,7 @@ export class UsersService {
     });
 
     if (!filme) {
-      throw new NotFoundException('filme não encontrada');
+      throw new NotFoundException('filme não encontrado');
     }
 
     const usuario = await this.db.user.update({

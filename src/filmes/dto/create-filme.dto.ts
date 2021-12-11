@@ -7,18 +7,9 @@ export class CreateFilmeDto {
   name: string;
 
   @IsString()
-  @IsNotEmpty({ message: 'Atores não pode ser vazio' })
-  @Length(4, 500)
-  atores: string;
-
-  @IsString()
   @IsNotEmpty({ message: 'Diretores não pode ser vazio' })
   @Length(4, 500)
   diretores: string;
-
-  @IsString()
-  @IsNotEmpty({ message: 'Gênero não pode ser vazio' })
-  genero: string;
 
   @IsString()
   @IsNotEmpty({ message: 'Legenda não pode ser vazio' })
