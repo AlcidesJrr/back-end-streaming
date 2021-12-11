@@ -77,4 +77,30 @@ export class UsersService {
       message: 'Usuário excluído com sucesso',
     };
   }
+
+  async addList(user: User, filmeId: string) {
+    const filme = await this.db.filme.findUnique({
+      where: { id: filmeId },
+    });
+
+    if (!filme) {
+      throw new NotFoundException('filme não encontrada');
+    }
+
+    const usuario = await this.db.user.update({
+      where: { id: user.id },
+      data: {
+        filme: {
+          connect: {
+            id: filme.id,
+          },
+        },
+      },
+      include: {
+        filme: true,
+      },
+    });
+    delete usuario.senha;
+    return usuario;
+  }
 }
